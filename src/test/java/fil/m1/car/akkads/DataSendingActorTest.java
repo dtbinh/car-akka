@@ -8,6 +8,7 @@ import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
 import akka.testkit.JavaTestKit;
+import fil.m1.car.akkads.actor.NodeDataSendingActor;
 
 public class DataSendingActorTest {
 

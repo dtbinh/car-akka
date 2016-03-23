@@ -1,4 +1,4 @@
-package fil.m1.car.akkads;
+package fil.m1.car.akkads.message;
 
 import java.util.List;
 

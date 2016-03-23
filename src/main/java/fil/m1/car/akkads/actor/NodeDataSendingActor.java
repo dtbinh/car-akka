@@ -1,4 +1,4 @@
-package fil.m1.car.akkads;
+package fil.m1.car.akkads.actor;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -6,15 +6,16 @@ import java.util.List;
 import akka.actor.ActorRef;
 import akka.actor.UntypedActorWithStash;
 import akka.japi.Procedure;
+import fil.m1.car.akkads.history.DataSendingRecord;
+import fil.m1.car.akkads.message.DataMessage;
+import fil.m1.car.akkads.message.SetHierarchyMessage;
 
 public class NodeDataSendingActor extends UntypedActorWithStash {
 
-    private DataSendingHistory history;
     private ActorRef parent;
     private List<ActorRef> children;
 
-    public NodeDataSendingActor(DataSendingHistory history) {
-        this.history = history;
+    public NodeDataSendingActor() {
         parent = null;
         children = new LinkedList<ActorRef>();
     }
@@ -29,7 +30,8 @@ public class NodeDataSendingActor extends UntypedActorWithStash {
         @Override
         public void apply(Object message) throws Exception {
             if (message instanceof SetHierarchyMessage) {
-                history.addRecord(new DataSendingRecord(getSender(), getSelf(), message));
+                final DataSendingRecord record = new DataSendingRecord(getSender(), getSelf(), message);
+                getContext().system().actorSelection("../history").tell(record, getSelf());
                 final SetHierarchyMessage setHierarchyMessage = (SetHierarchyMessage) message;
                 parent = setHierarchyMessage.getParent();
                 children.addAll(setHierarchyMessage.getChildren());
@@ -46,7 +48,8 @@ public class NodeDataSendingActor extends UntypedActorWithStash {
         @Override
         public void apply(Object message) {
             if (message instanceof DataMessage) {
-                history.addRecord(new DataSendingRecord(getSender(), getSelf(), message));
+                final DataSendingRecord record = new DataSendingRecord(getSender(), getSelf(), message);
+                getContext().actorSelection("/user/history").tell(record, getSelf());
                 final DataMessage dataMessage = (DataMessage) message;
                 System.out.println(self().path().name() + " received the following message from " + sender().path().name() + " : " + dataMessage.getContent());
                 if (parent != null) {

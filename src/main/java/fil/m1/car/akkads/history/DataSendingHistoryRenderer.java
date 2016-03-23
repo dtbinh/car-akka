@@ -1,4 +1,4 @@
-package fil.m1.car.akkads;
+package fil.m1.car.akkads.history;
 
 import de.vandermeer.asciitable.v2.RenderedTable;
 import de.vandermeer.asciitable.v2.V2_AsciiTable;
