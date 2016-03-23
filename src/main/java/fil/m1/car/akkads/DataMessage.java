@@ -1,6 +1,6 @@
 package fil.m1.car.akkads;
 
-public class DataMessage {
+public class DataMessage implements Message {
     
     private String content;
 
@@ -11,10 +11,4 @@ public class DataMessage {
     public String getContent() {
         return content;
     }
-    
-    @Override
-    public String toString() {
-        return content;
-    }
-
 }
