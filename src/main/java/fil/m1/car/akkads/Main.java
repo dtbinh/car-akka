@@ -36,9 +36,9 @@ public class Main {
 
         node2.tell(new DataMessage("Keyser Söze"), ActorRef.noSender());
         
-        historyKeeper.tell(new RenderHistoryMessage(), ActorRef.noSender());
+        //Thread.sleep(3000);
         
-        //actorSystem.shutdown();
+        historyKeeper.tell(new RenderHistoryMessage(), ActorRef.noSender());
     }
 
 

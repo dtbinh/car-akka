@@ -8,6 +8,7 @@ import akka.actor.UntypedActorWithStash;
 import akka.japi.Procedure;
 import fil.m1.car.akkads.history.DataSendingRecord;
 import fil.m1.car.akkads.message.DataMessage;
+import fil.m1.car.akkads.message.DataSendingRecordMessage;
 import fil.m1.car.akkads.message.SetHierarchyMessage;
 
 public class NodeDataSendingActor extends UntypedActorWithStash {
@@ -31,7 +32,7 @@ public class NodeDataSendingActor extends UntypedActorWithStash {
         public void apply(Object message) throws Exception {
             if (message instanceof SetHierarchyMessage) {
                 final DataSendingRecord record = new DataSendingRecord(getSender(), getSelf(), message);
-                getContext().system().actorSelection("../history").tell(record, getSelf());
+                getContext().system().actorSelection("../history").tell(new DataSendingRecordMessage(record), getSelf());
                 final SetHierarchyMessage setHierarchyMessage = (SetHierarchyMessage) message;
                 parent = setHierarchyMessage.getParent();
                 children.addAll(setHierarchyMessage.getChildren());
@@ -49,7 +50,7 @@ public class NodeDataSendingActor extends UntypedActorWithStash {
         public void apply(Object message) {
             if (message instanceof DataMessage) {
                 final DataSendingRecord record = new DataSendingRecord(getSender(), getSelf(), message);
-                getContext().actorSelection("/user/history").tell(record, getSelf());
+                getContext().actorSelection("/user/history").tell(new DataSendingRecordMessage(record), getSelf());
                 final DataMessage dataMessage = (DataMessage) message;
                 System.out.println(self().path().name() + " received the following message from " + sender().path().name() + " : " + dataMessage.getContent());
                 if (parent != null) {
