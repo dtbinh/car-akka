@@ -32,7 +32,7 @@ public class NodeDataSendingActor extends UntypedActorWithStash {
         public void apply(Object message) throws Exception {
             if (message instanceof SetHierarchyMessage) {
                 final DataSendingRecord record = new DataSendingRecord(getSender(), getSelf(), message);
-                getContext().system().actorSelection("../history").tell(new DataSendingRecordMessage(record), getSelf());
+                getContext().system().actorSelection("/user/history").tell(new DataSendingRecordMessage(record), getSelf());
                 final SetHierarchyMessage setHierarchyMessage = (SetHierarchyMessage) message;
                 parent = setHierarchyMessage.getParent();
                 children.addAll(setHierarchyMessage.getChildren());
@@ -52,7 +52,7 @@ public class NodeDataSendingActor extends UntypedActorWithStash {
                 final DataSendingRecord record = new DataSendingRecord(getSender(), getSelf(), message);
                 getContext().actorSelection("/user/history").tell(new DataSendingRecordMessage(record), getSelf());
                 final DataMessage dataMessage = (DataMessage) message;
-                System.out.println(self().path().name() + " received the following message from " + sender().path().name() + " : " + dataMessage.getContent());
+                //System.out.println(self().path().name() + " received the following message from " + sender().path().name() + " : " + dataMessage.getContent());
                 if (parent != null) {
                     parent.tell(dataMessage, getSelf());
                 }

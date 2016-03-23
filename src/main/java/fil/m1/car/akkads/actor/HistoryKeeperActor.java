@@ -2,6 +2,7 @@ package fil.m1.car.akkads.actor;
 
 import akka.actor.UntypedActor;
 import fil.m1.car.akkads.history.DataSendingHistory;
+import fil.m1.car.akkads.history.DataSendingHistoryRenderer;
 import fil.m1.car.akkads.history.DataSendingRecord;
 import fil.m1.car.akkads.message.DataSendingRecordMessage;
 import fil.m1.car.akkads.message.RenderHistoryMessage;
@@ -25,12 +26,12 @@ public class HistoryKeeperActor extends UntypedActor {
     @Override
     public void onReceive(Object message) throws Exception {
         if (message instanceof DataSendingRecordMessage) {
-            System.out.println("???");
             final DataSendingRecordMessage dataSendingRecordMessage = (DataSendingRecordMessage) message;
             history.addRecord(dataSendingRecordMessage.getRecord());
         }
         else if (message instanceof RenderHistoryMessage) {
-            System.out.println("H : " + history.getRecords().size());
+            final DataSendingHistoryRenderer renderer = new DataSendingHistoryRenderer();
+            System.out.println(renderer.renderHistory(history));
         }
         else {
             unhandled(message);

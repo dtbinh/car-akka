@@ -28,7 +28,6 @@ public class DataSendingHistoryRenderer {
         asciiTable.addRule();
         
         // adding records
-        System.out.println(dataSendingHistory.getRecords());
         dataSendingHistory.getRecords().forEach(record -> {
             final ContentRow row = asciiTable.addRow(record.getSender().path().name(), record.getRecipient().path().name(), record.getMessage());
             row.setAlignment(columnsAlignments);

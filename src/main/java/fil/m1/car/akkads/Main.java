@@ -18,7 +18,6 @@ public class Main {
         final ActorSystem actorSystem = ActorSystem.create("JediDataSendingSystem");
         
         final ActorRef historyKeeper = actorSystem.actorOf(Props.create(HistoryKeeperActor.class), "history");
-        System.out.println(historyKeeper.path());
         
         final ActorRef node1 = actorSystem.actorOf(Props.create(NodeDataSendingActor.class), "Node1");
         final ActorRef node2 = actorSystem.actorOf(Props.create(NodeDataSendingActor.class), "Node2");
@@ -36,7 +35,8 @@ public class Main {
 
         node2.tell(new DataMessage("Keyser Söze"), ActorRef.noSender());
         
-        //Thread.sleep(3000);
+        // TODO has to be removed
+        Thread.sleep(10000);
         
         historyKeeper.tell(new RenderHistoryMessage(), ActorRef.noSender());
     }
