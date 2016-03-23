@@ -5,6 +5,7 @@ import java.util.List;
 
 import akka.actor.ActorRef;
 import akka.actor.UntypedActor;
+import akka.japi.Procedure;
 
 public class NodeDataSendingActor extends UntypedActor {
 
@@ -17,22 +18,43 @@ public class NodeDataSendingActor extends UntypedActor {
     }
 
     @Override
-    public void onReceive(Object message) throws Exception {
-        if (message instanceof SetParentMessage) {
-            final SetParentMessage setParentMessage = (SetParentMessage) message;
-            parent = setParentMessage.getParent();
-        }
-        else if (message instanceof AddChildMessage) {
-            final AddChildMessage addChildMessage = (AddChildMessage) message;
-            children.add(addChildMessage.getChild());
-            return;
-        }
-        else if (message instanceof DataMessage) {
-            final DataMessage dataMessage = (DataMessage) message;
-            System.out.println(self().path().name() + " received the following message from " + sender().path().name() + " : " + dataMessage);
-            children.forEach(child -> child.tell(dataMessage, getSelf()));
-            return;
-        }
-        System.err.println("Cannot handle message " + message);
+    public void preStart() throws Exception {
+        getContext().become(whenNotVisitedYet);
     }
+
+    final Procedure<Object> whenNotVisitedYet = new Procedure<Object>() {
+        @Override
+        public void apply(Object message) {
+            if (message instanceof SetParentMessage) {
+                final SetParentMessage setParentMessage = (SetParentMessage) message;
+                parent = setParentMessage.getParent();
+            } else if (message instanceof AddChildMessage) {
+                final AddChildMessage addChildMessage = (AddChildMessage) message;
+                final ActorRef child = addChildMessage.getChild();
+                children.add(child);
+                child.tell(new SetParentMessage(getSelf()), getSelf());
+            } else if (message instanceof DataMessage) {
+                final DataMessage dataMessage = (DataMessage) message;
+                System.out.println(self().path().name() + " received the following message from " + sender().path().name() + " : " + dataMessage);
+                if (parent != null) {
+                    parent.tell(dataMessage, getSelf());
+                }
+                children.forEach(child -> child.tell(dataMessage, getSelf()));
+                getContext().become(whenAlreadyVisited);
+                return;
+            }
+        }
+    };
+
+    final Procedure<Object> whenAlreadyVisited = new Procedure<Object>() {
+        @Override
+        public void apply(Object message) {
+            unhandled(message);
+        }
+    };
+
+    @Override
+    public void onReceive(Object message) throws Exception {
+    }
+
 }
