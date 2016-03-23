@@ -1,15 +1,13 @@
 package fil.m1.car.akkads;
 
-import akka.actor.ActorRef;
-import akka.actor.ActorSystem;
-import akka.actor.Props;
-import akka.testkit.JavaTestKit;
-import akka.testkit.TestKit;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import akka.actor.ActorRef;
+import akka.actor.ActorSystem;
+import akka.actor.Props;
+import akka.testkit.JavaTestKit;
 
 public class DataSendingActorTest {
 
@@ -30,7 +28,7 @@ public class DataSendingActorTest {
     public void testOnReceive() throws Exception {
 
         new JavaTestKit(system) {{
-            final Props props = Props.create(DataSendingActor.class);
+            final Props props = Props.create(NodeDataSendingActor.class);
             final ActorRef subject = system.actorOf(props);
             subject.tell("Hello", ActorRef.noSender());
             expectMsgEquals("Hello");
