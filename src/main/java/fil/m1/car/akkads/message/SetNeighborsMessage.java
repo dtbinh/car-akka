@@ -20,4 +20,17 @@ public class SetNeighborsMessage implements Message {
         return neighbors;
     }
     
+    @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append("neighbors : ");
+        if (neighbors != null) {
+            neighbors.forEach(neighbor -> builder.append(neighbor.path().name() + " "));
+        }
+        else {
+            builder.append("none");
+        }
+        return builder.toString();
+    }
+    
 }

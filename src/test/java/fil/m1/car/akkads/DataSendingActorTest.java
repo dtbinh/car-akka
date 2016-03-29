@@ -8,7 +8,7 @@ import akka.actor.ActorRef;
 import akka.actor.ActorSystem;
 import akka.actor.Props;
 import akka.testkit.JavaTestKit;
-import fil.m1.car.akkads.actor.NodeDataSendingActor;
+import fil.m1.car.akkads.actor.TreeNodeDataSendingActor;
 
 public class DataSendingActorTest {
 
@@ -29,7 +29,7 @@ public class DataSendingActorTest {
     public void testOnReceive() throws Exception {
 
         new JavaTestKit(system) {{
-            final Props props = Props.create(NodeDataSendingActor.class);
+            final Props props = Props.create(TreeNodeDataSendingActor.class);
             final ActorRef subject = system.actorOf(props);
             subject.tell("Hello", ActorRef.noSender());
             expectMsgEquals("Hello");

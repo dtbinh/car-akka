@@ -25,5 +25,20 @@ public class SetHierarchyMessage implements Message {
     public List<ActorRef> getChildren() {
         return children;
     }
+    
+    @Override
+    public String toString() {
+        final StringBuilder builder = new StringBuilder();
+        builder.append("parent : ");
+        builder.append(parent != null ? parent.path().name() + "\n" : "none\n");
+        builder.append("children : ");
+        if (children != null) {
+            children.forEach(child -> builder.append(child.path().name() + " "));
+        }
+        else {
+            builder.append("none");
+        }
+        return builder.toString();
+    }
 
 }

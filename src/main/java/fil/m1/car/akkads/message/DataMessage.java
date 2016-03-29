@@ -15,4 +15,9 @@ public class DataMessage implements Message {
     public String getContent() {
         return content;
     }
+    
+    @Override
+    public String toString() {
+        return "message : \"" + content + "\"";
+    }
 }
