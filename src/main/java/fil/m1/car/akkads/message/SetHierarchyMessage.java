@@ -6,8 +6,12 @@ import akka.actor.ActorRef;
 
 public class SetHierarchyMessage implements Message {
     
+    private static final long serialVersionUID = 1L;
     private ActorRef parent;
     private List<ActorRef> children;
+    
+    public SetHierarchyMessage() {
+    }
     
     public SetHierarchyMessage(ActorRef parent, List<ActorRef> children) {
         this.parent = parent;

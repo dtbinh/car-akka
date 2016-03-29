@@ -15,6 +15,7 @@ public class NodeDataSendingActor extends UntypedActorWithStash {
 
     private ActorRef parent;
     private List<ActorRef> children;
+    private static final String HISTORY_ACTOR_ADDRESS = "akka.tcp://HistorySystem@127.0.0.1:5000/user/history"; 
 
     public NodeDataSendingActor() {
         parent = null;
@@ -32,7 +33,7 @@ public class NodeDataSendingActor extends UntypedActorWithStash {
         public void apply(Object message) throws Exception {
             if (message instanceof SetHierarchyMessage) {
                 final DataSendingRecord record = new DataSendingRecord(getSender(), getSelf(), message);
-                getContext().system().actorSelection("/user/history").tell(new DataSendingRecordMessage(record), getSelf());
+                getContext().system().actorSelection(HISTORY_ACTOR_ADDRESS).tell(new DataSendingRecordMessage(record), getSelf());
                 final SetHierarchyMessage setHierarchyMessage = (SetHierarchyMessage) message;
                 parent = setHierarchyMessage.getParent();
                 children.addAll(setHierarchyMessage.getChildren());
@@ -50,7 +51,7 @@ public class NodeDataSendingActor extends UntypedActorWithStash {
         public void apply(Object message) {
             if (message instanceof DataMessage) {
                 final DataSendingRecord record = new DataSendingRecord(getSender(), getSelf(), message);
-                getContext().actorSelection("/user/history").tell(new DataSendingRecordMessage(record), getSelf());
+                getContext().actorSelection(HISTORY_ACTOR_ADDRESS).tell(new DataSendingRecordMessage(record), getSelf());
                 final DataMessage dataMessage = (DataMessage) message;
                 //System.out.println(self().path().name() + " received the following message from " + sender().path().name() + " : " + dataMessage.getContent());
                 if (parent != null) {
