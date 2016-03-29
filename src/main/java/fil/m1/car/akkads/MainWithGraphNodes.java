@@ -18,9 +18,9 @@ import fil.m1.car.akkads.message.SetNeighborsMessage;
 public class MainWithGraphNodes {
     
     public static void main(String[] args) throws InterruptedException {
-        final String configFile1 = MainWithTreeNodes.class.getClassLoader().getResource("conf1.conf").getFile();
-        final String configFile2 = MainWithTreeNodes.class.getClassLoader().getResource("conf2.conf").getFile();
-        final String configFile3 = MainWithTreeNodes.class.getClassLoader().getResource("conf3.conf").getFile();
+        final String configFile1 = MainWithGraphNodes.class.getClassLoader().getResource("conf1.conf").getFile();
+        final String configFile2 = MainWithGraphNodes.class.getClassLoader().getResource("conf2.conf").getFile();
+        final String configFile3 = MainWithGraphNodes.class.getClassLoader().getResource("conf3.conf").getFile();
         
         final Config config1 = ConfigFactory.parseFile(new File(configFile1));
         final Config config2 = ConfigFactory.parseFile(new File(configFile2));
@@ -46,7 +46,7 @@ public class MainWithGraphNodes {
         node4.tell(new SetNeighborsMessage(Arrays.asList(node2, node6)), ActorRef.noSender());
         node6.tell(new SetNeighborsMessage(Arrays.asList(node5, node4)), ActorRef.noSender());
 
-        node2.tell(new DataMessage("Keyser Söze"), ActorRef.noSender());
+        node2.tell(new DataMessage("Keyser Sï¿½ze"), ActorRef.noSender());
         
         // TODO has to be removed
         Thread.sleep(10000);
