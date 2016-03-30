@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<run>
+
+  <configurations>
+    <configuration>conf1.conf</configuration>
+    <configuration>conf2.conf</configuration>
+  </configurations>
+
+  <nodes>
+    <node>
+      <name>1</name>
+      <actorSystem>1</actorSystem>
+    </node>
+    <node>
+      <name>2</name>
+      <actorSystem>2</actorSystem>
+    </node>
+    <node>
+      <name>3</name>
+      <actorSystem>1</actorSystem>
+    </node>
+    <node>
+      <name>4</name>
+      <actorSystem>2</actorSystem>
+    </node>
+    <node>
+      <name>5</name>
+      <actorSystem>1</actorSystem>
+    </node>
+    <node>
+      <name>6</name>
+      <actorSystem>2</actorSystem>
+    </node>
+  </nodes>
+
+  <messages>
+
+    <hierarchy>
+      <parent>1</parent>
+      <children>
+        <child>2</child>
+        <child>5</child>
+      </children>
+    </hierarchy>
+
+    <hierarchy>
+      <parent>2</parent>
+      <children>
+        <child>3</child>
+        <child>4</child>
+      </children>
+    </hierarchy>
+
+    <hierarchy>
+      <parent>5</parent>
+      <children>
+        <child>6</child>
+      </children>
+    </hierarchy>
+
+    <data>
+      <initiator>2</initiator>
+      <content>Keyser Söze</content>
+    </data>
+
+  </messages>
+
+</run>
