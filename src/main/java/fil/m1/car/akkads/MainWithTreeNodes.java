@@ -46,7 +46,7 @@ public class MainWithTreeNodes {
         node4.tell(new SetHierarchyMessage(node2, null), ActorRef.noSender());
         node6.tell(new SetHierarchyMessage(node5, null), ActorRef.noSender());
 
-        node2.tell(new DataMessage("Keyser Söze"), ActorRef.noSender());
+        node2.tell(new DataMessage("Keyser Soze", node2), ActorRef.noSender());
         
         // TODO has to be removed
         Thread.sleep(10000);

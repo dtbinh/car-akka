@@ -1,35 +1,30 @@
 <?xml version="1.0"?>
 <run>
 
-  <configurations>
-    <configuration>conf1.conf</configuration>
-    <configuration>conf2.conf</configuration>
-  </configurations>
-
   <nodes>
     <node>
       <name>1</name>
-      <actorSystem>1</actorSystem>
+      <address>JediDataSendingSystem1@127.0.0.1:3000/user/1</address>
     </node>
     <node>
       <name>2</name>
-      <actorSystem>2</actorSystem>
+      <address>JediDataSendingSystem2@127.0.0.1:4000/user/2</address>
     </node>
     <node>
       <name>3</name>
-      <actorSystem>1</actorSystem>
+      <address>JediDataSendingSystem1@127.0.0.1:3000/user/3</address>
     </node>
     <node>
       <name>4</name>
-      <actorSystem>2</actorSystem>
+      <address>JediDataSendingSystem2@127.0.0.1:4000/user/4</address>
     </node>
     <node>
       <name>5</name>
-      <actorSystem>1</actorSystem>
+      <address>JediDataSendingSystem1@127.0.0.1:3000/user/5</address>
     </node>
     <node>
       <name>6</name>
-      <actorSystem>2</actorSystem>
+      <address>JediDataSendingSystem2@127.0.0.1:4000/user/6</address>
     </node>
   </nodes>
 
@@ -59,8 +54,8 @@
     </hierarchy>
 
     <data>
+      <content>Keyser Soze</content>
       <initiator>2</initiator>
-      <content>Keyser Söze</content>
     </data>
 
   </messages>

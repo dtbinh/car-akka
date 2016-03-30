@@ -46,7 +46,7 @@ public class MainWithGraphNodes {
         node4.tell(new SetNeighborsMessage(Arrays.asList(node2, node6)), ActorRef.noSender());
         node6.tell(new SetNeighborsMessage(Arrays.asList(node5, node4)), ActorRef.noSender());
 
-        node2.tell(new DataMessage("Keyser S�ze"), ActorRef.noSender());
+        node2.tell(new DataMessage("Keyser Soze", node2), ActorRef.noSender());
         
         // TODO has to be removed
         Thread.sleep(10000);
